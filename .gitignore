@@ -20,3 +20,6 @@ Thumbs.db
 *~
 .idea/
 .vscode/
+
+# Local agent context — inspiration/prior-art note, not published
+INSPIRATION.md
