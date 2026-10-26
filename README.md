@@ -1,47 +1,67 @@
-# Ultron
+<p align="center">
+  <img src="assets/ultron-banner.svg" alt="Ultron — one-stop agentic cybersecurity for Claude Code" width="100%">
+</p>
 
-A one-stop **agentic cybersecurity** plugin for [Claude Code](https://claude.com/claude-code). Ultron bundles focused, proof-first security skills that Claude picks automatically based on what you ask — offensive testing, source-code auditing, and defensive blue-team work — all evidence-backed and scope-disciplined.
+<h1 align="center">Ultron</h1>
 
-> **Authorized use only.** Ultron is for systems you own or have explicit written permission to test. It defaults to loopback/private-LAN targets, refuses public third-party targets, and never performs destructive, denial-of-service, or mass-targeting actions. You are responsible for staying within your authorization and local law.
+<p align="center">
+  <b>One-stop agentic cybersecurity plugin for <a href="https://claude.com/claude-code">Claude Code</a>.</b><br>
+  Offensive testing, source-code auditing, and defensive blue-team work — evidence-backed, proof-first, scope-disciplined.
+</p>
 
-## What's inside
+<p align="center">
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-ff6a4d">
+  <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-ff8a3d">
+  <img alt="Claude Code" src="https://img.shields.io/badge/Claude%20Code-plugin-5aa0ff">
+  <img alt="Skills" src="https://img.shields.io/badge/skills-3-49d08b">
+  <img alt="OWASP" src="https://img.shields.io/badge/OWASP%20Top%2010-2025-6f42c1">
+  <img alt="MITRE ATT&CK" src="https://img.shields.io/badge/MITRE%20ATT%26CK-v18-e0245e">
+  <img alt="PRs welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen">
+</p>
+
+---
+
+> [!WARNING]
+> **Authorized use only.** Ultron is for systems you own or have explicit written permission to test. It defaults to loopback/private-LAN targets, refuses public third-party targets, and never performs destructive, denial-of-service, or mass-targeting actions. You are responsible for staying within your authorization and local law. See [SECURITY.md](SECURITY.md).
+
+## ✨ What's inside
 
 Installing the plugin gives you several skills. Each triggers on its own description — you don't choose a skill by hand, you just describe the task.
 
 | Skill | Use it for | Posture |
-|---|---|---|
-| **ultron** | Localhost / private-LAN web app & API penetration test. Recon → Plan → Test → Verify → Report with independent verification and an evidence-backed report. | Offense |
-| **code-audit** | White-box vulnerability review of source code (no running app required). Data-flow and authorization reasoning, each issue tied to a sink and a fix. | Offense |
-| **defend** | Blue-team work: incident triage and DFIR, log/artifact analysis, and configuration hardening against a known threat model. | Defense |
+|---|---|:---:|
+| **⚔️ ultron** | Localhost / private-LAN web app & API penetration test. Recon → Plan → Test → Verify → Report with independent verification and an evidence-backed report. | 🔴 Offense |
+| **🔎 code-audit** | White-box vulnerability review of source code (no running app required). Data-flow and authorization reasoning, each issue tied to a sink and a fix. | 🔴 Offense |
+| **🛡️ defend** | Blue-team work: incident triage and DFIR, log/artifact analysis, and configuration hardening against a known threat model. | 🟢 Defense |
 
-Shared knowledge packs (MITRE ATT&CK + CWE crosswalk, breach-class patterns, authoritative source index) back every skill so findings map to recognized taxonomies.
+Shared knowledge packs — a MITRE ATT&CK ↔ CWE ↔ OWASP:2025 crosswalk, breach-class patterns, and an authoritative source index — back every skill so findings map to recognized taxonomies.
 
-### Reverse engineering
+### 🧬 Reverse engineering
 
 Ultron does **not** bundle a reverse-engineering engine. For binary, firmware, mobile, or managed-code RE, install the official **REA** plugin / `reverse-engineer-anything` skill alongside Ultron. Ultron's skills point you to it when a task needs deep RE.
 
-## Install
+## 📦 Install
 
 ```sh
 # add this repo as a plugin marketplace, then install the plugin
-/plugin marketplace add iamsantosh007/ultron_cyber_security        # or your fork's GitHub path
+/plugin marketplace add iamsantosh007/ultron_cyber_security
 /plugin install ultron@ultron
 ```
 
 Or clone locally and add the path as a marketplace in an interactive Claude Code session.
 
-## Usage
+## 🚀 Usage
 
-Just describe the job. Examples:
+Just describe the job — Claude routes to the right skill:
 
-- "Pentest my app running on `http://localhost:3000`, source is in `./server`."
-- "Audit this repo for security vulnerabilities."
-- "Something hit our dev box — help me triage these logs and figure out what happened."
-- "Harden this nginx + Postgres setup before we expose it."
+- 💬 *"Pentest my app running on `http://localhost:3000`, source is in `./server`."*
+- 💬 *"Audit this repo for security vulnerabilities."*
+- 💬 *"Something hit our dev box — help me triage these logs and figure out what happened."*
+- 💬 *"Harden this nginx + Postgres setup before we expose it."*
 
 Ultron records a scope manifest, works the methodology, verifies every confirmed finding independently, and writes a `SECURITY-FINDINGS.md` report with reproductions, evidence, severity, and prioritized fixes.
 
-## Principles
+## 🧭 Principles
 
 - **Proof over alerts.** A scanner hit or risky code path is a *candidate*, not a finding, until the effect is demonstrated and independently reproduced.
 - **Least-invasive evidence.** Disposable fixtures, harmless markers, no table dumps, no DoS, no brute force by default.
@@ -49,15 +69,26 @@ Ultron records a scope manifest, works the methodology, verifies every confirmed
 - **Secret hygiene.** No raw credentials, tokens, or cookies in manifests, prompts, or reports.
 - **Knowledge, cited.** Methodology distilled from OWASP (WSTG, Top 10, ASVS, cheat sheets), MITRE ATT&CK & CWE, NIST SP 800-115 / CSF, PTES, and CISA KEV — referenced, not copied.
 
-## Status
+## 🗂️ Layout
 
-`v0.1.0` — all three skills (**ultron**, **code-audit**, **defend**) and the shared knowledge packs (`references/knowledge/`: MITRE ATT&CK ↔ CWE ↔ OWASP:2025 crosswalk, breach-class patterns, authoritative source index) are in place. Taxonomies current as of 2026-10-26: OWASP Top 10:2025, MITRE ATT&CK v18. Expect iteration; file issues for gaps.
+```
+.claude-plugin/        plugin.json · marketplace.json
+skills/
+  ultron/              localhost web/API pentest  (+ references/)
+  code-audit/          white-box source review    (+ references/)
+  defend/              DFIR response & hardening   (+ references/)
+references/knowledge/  attack-mapping · incident-patterns · sources
+```
 
-## Contributing & security
+## 📌 Status
+
+`v0.1.0` — all three skills (**ultron**, **code-audit**, **defend**) and the shared knowledge packs are in place. Taxonomies current as of 2026-10-26: **OWASP Top 10:2025**, **MITRE ATT&CK v18**. Expect iteration — file issues for gaps.
+
+## 🤝 Contributing & security
 
 - [CONTRIBUTING.md](CONTRIBUTING.md) — design principles (keep them intact), layout, and the PR checklist.
 - [SECURITY.md](SECURITY.md) — how to report a vulnerability in the plugin, and the authorized-use policy.
 
-## License
+## 📄 License
 
 [MIT](LICENSE) © 2026 Santosh Patro
