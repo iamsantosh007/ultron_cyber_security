@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/ultron-banner.svg" alt="Ultron — one-stop agentic cybersecurity for Claude Code" width="100%">
+  <img src="assets/ultron-hud.svg" alt="Ultron — one-stop agentic cybersecurity for Claude Code" width="100%">
 </p>
 
 <h1 align="center">Ultron</h1>
