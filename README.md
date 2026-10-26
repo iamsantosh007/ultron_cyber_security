@@ -6,7 +6,7 @@
 
 <p align="center">
   <b>One-stop agentic cybersecurity plugin for <a href="https://claude.com/claude-code">Claude Code</a>.</b><br>
-  Offensive testing, source-code auditing, and defensive blue-team work — evidence-backed, proof-first, scope-disciplined.
+  Penetration testing · web &amp; API security · source code audit · OWASP Top 10 · MITRE ATT&amp;CK · DFIR &amp; hardening — red team <b>and</b> blue team, evidence-backed and proof-first.
 </p>
 
 <p align="center">
@@ -23,6 +23,16 @@
 
 > [!WARNING]
 > **Authorized use only.** Ultron is for systems you own or have explicit written permission to test. It defaults to loopback/private-LAN targets, refuses public third-party targets, and never performs destructive, denial-of-service, or mass-targeting actions. You are responsible for staying within your authorization and local law. See [SECURITY.md](SECURITY.md).
+
+## 🎯 Why Ultron
+
+- **One plugin, the whole security lifecycle** — find it (pentest), read it (code audit), defend it (DFIR + hardening). No juggling separate tools.
+- **Proof, not noise** — every finding is demonstrated and independently reproduced with a working PoC, not a scanner alert you have to chase.
+- **Runs where you work** — host tools against `localhost`, no Docker, no cloud account, no hosted scanner, no API key beyond Claude Code itself.
+- **Maps to what matters** — OWASP Top 10:2025, MITRE ATT&CK v18, CWE, NIST CSF, so findings speak the language your team and auditors already use.
+- **Free & open source (MIT)** — fork it, extend it, ship it.
+
+**Try it once:** install, then type *"pentest my app on `http://localhost:3000`"* — you'll have a reproducible findings report in minutes.
 
 ## ✨ What's inside
 
@@ -88,6 +98,12 @@ references/knowledge/  techniques-atlas · attack-mapping · incident-patterns �
 
 - [CONTRIBUTING.md](CONTRIBUTING.md) — design principles (keep them intact), layout, and the PR checklist.
 - [SECURITY.md](SECURITY.md) — how to report a vulnerability in the plugin, and the authorized-use policy.
+
+## 🔖 Topics
+
+`cybersecurity` · `penetration-testing` · `pentest` · `ethical-hacking` · `bug-bounty` · `red-team` · `blue-team` · `appsec` · `web-security` · `api-security` · `owasp` · `owasp-top-10` · `mitre-attack` · `vulnerability-scanner` · `security-audit` · `code-audit` · `sast` · `dfir` · `incident-response` · `threat-hunting` · `cloud-security` · `claude-code` · `claude-code-plugin` · `ai-security`
+
+Ultron is a Claude Code plugin for penetration testing, application security (AppSec), vulnerability detection, source code security review, and blue-team incident response — an open-source, agentic alternative to running separate pentest, SAST, and DFIR tools.
 
 ## 📄 License
 

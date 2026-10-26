@@ -1,7 +1,7 @@
 {
   "name": "ultron",
   "version": "0.1.0",
-  "description": "One-stop agentic cybersecurity plugin for Claude Code: authorized offensive testing (local web/API pentest), white-box source code audit, and defensive blue-team work (incident triage, log analysis, hardening). Evidence-backed, proof-first, scope-disciplined.",
+  "description": "Ultron — one-stop agentic cybersecurity plugin for Claude Code. Penetration testing (pentest) of local web apps and APIs, white-box source code security audit, and blue-team defense (DFIR incident response, log analysis, hardening). Covers OWASP Top 10, MITRE ATT&CK, vulnerability detection, ethical hacking, red team and blue team workflows — evidence-backed, proof-first, scope-disciplined.",
   "author": {
     "name": "Santosh Patro",
     "email": "patrosantosh007@gmail.com"
@@ -11,14 +11,33 @@
   "repository": "https://github.com/iamsantosh007/ultron_cyber_security",
   "bugs": "https://github.com/iamsantosh007/ultron_cyber_security/issues",
   "keywords": [
+    "cybersecurity",
     "security",
     "pentest",
-    "appsec",
-    "owasp",
-    "dfir",
+    "penetration-testing",
+    "ethical-hacking",
+    "hacking",
+    "bug-bounty",
+    "red-team",
     "blue-team",
-    "code-audit",
+    "appsec",
+    "web-security",
+    "api-security",
+    "owasp",
+    "owasp-top-10",
+    "mitre-attack",
     "vulnerability",
-    "agentic"
+    "vulnerability-scanner",
+    "security-audit",
+    "code-audit",
+    "sast",
+    "dfir",
+    "incident-response",
+    "threat-hunting",
+    "cloud-security",
+    "claude-code",
+    "claude-code-plugin",
+    "agentic",
+    "ai-security"
   ]
 }

@@ -8,7 +8,7 @@
     {
       "name": "ultron",
       "source": "./",
-      "description": "One-stop agentic cybersecurity: authorized offensive pentest, source code audit, and defensive blue-team workflows for Claude Code."
+      "description": "One-stop agentic cybersecurity for Claude Code: penetration testing (pentest), web/API security, source code audit, OWASP Top 10, MITRE ATT&CK, DFIR incident response, and hardening — red team + blue team, proof-first."
     }
   ]
 }
