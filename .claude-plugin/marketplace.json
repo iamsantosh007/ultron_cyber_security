@@ -1,0 +1,14 @@
+{
+  "name": "ultron",
+  "owner": {
+    "name": "Santosh Patro",
+    "email": "patrosantosh007@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "ultron",
+      "source": "./",
+      "description": "One-stop agentic cybersecurity: authorized offensive pentest, source code audit, and defensive blue-team workflows for Claude Code."
+    }
+  ]
+}

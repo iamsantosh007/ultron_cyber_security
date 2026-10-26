@@ -1,0 +1,70 @@
+# Contributing to Ultron
+
+Ultron is a Claude Code plugin: a set of security **skills** (Markdown + a
+manifest), not an application. Contributions are welcome — new checks, new skills,
+sharper methodology, corrections. Read this first so a change fits the design.
+
+## Design principles (do not regress these)
+
+Ultron scores well because it is disciplined. Keep every contribution inside
+these rails:
+
+1. **Proof over alerts.** A scanner hit, a risky code path, or a version match is
+   a *candidate*, never a finding, until the effect is demonstrated and
+   independently reproduced. Methodology text must preserve this distinction.
+2. **Scope discipline.** Default to loopback / explicitly-authorized targets.
+   Never add a check that scans neighboring services, follows out-of-scope
+   redirects, or contacts third parties. Enforce the scope manifest on every
+   request, subresource, callback, and redirect.
+3. **Least-invasive evidence.** Disposable fixtures, harmless markers. No table
+   dumps, DoS, brute force, or destructive actions by default. Live
+   containment/eradication stays authorization-gated.
+4. **Secret hygiene.** No raw credentials, tokens, cookies, or PII in prompts,
+   reference files, reports, or committed artifacts.
+5. **Sharp and bounded.** Prefer a focused skill over a bloated one. "One stop"
+   is many small skills auto-routed by their `description`, not one giant file.
+   Keep each `SKILL.md` lean; put depth in `references/`.
+6. **Cited knowledge.** Distill from public authoritative sources (OWASP, MITRE
+   ATT&CK/CWE, NIST, CISA, PTES). Do not paste paywalled or pirated text. Add the
+   source to `references/knowledge/sources.md`.
+
+## Repository layout
+
+```
+.claude-plugin/{plugin.json,marketplace.json}   manifests
+skills/<name>/SKILL.md                           one skill, with frontmatter (name, description)
+skills/<name>/references/*.md                     the skill's depth
+references/knowledge/*.md                          cross-skill shared packs
+```
+
+## Adding or changing a skill
+
+- Give `SKILL.md` accurate frontmatter. The `description` is how Claude routes to
+  the skill — make it specific, and distinct from the other skills so they do not
+  collide. State when **not** to use it.
+- Keep `SKILL.md` to the workflow; move catalogs, queries, and worked examples
+  into `references/`.
+- Link references with paths relative to the file. Keep cross-skill links working.
+- Map findings to CWE / OWASP:2025 / ATT&CK using
+  `references/knowledge/attack-mapping.md`; update the crosswalk if you add a class.
+
+## Before opening a PR
+
+- [ ] All internal Markdown links resolve.
+- [ ] `plugin.json` and `marketplace.json` are valid JSON.
+- [ ] No secrets, evidence, or findings committed (`.gitignore` covers the
+      standard artifact names — check anything new).
+- [ ] Version-sensitive facts (OWASP/ATT&CK edition, CVE) cite the current source.
+- [ ] The change preserves the design principles above.
+
+Verify the plugin still loads locally:
+
+```sh
+/plugin marketplace add /path/to/this/repo
+/plugin install ultron@ultron
+```
+
+## License
+
+By contributing you agree your contribution is licensed under the repository's
+[MIT License](LICENSE).

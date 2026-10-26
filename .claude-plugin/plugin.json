@@ -1,0 +1,24 @@
+{
+  "name": "ultron",
+  "version": "0.1.0",
+  "description": "One-stop agentic cybersecurity plugin for Claude Code: authorized offensive testing (local web/API pentest), white-box source code audit, and defensive blue-team work (incident triage, log analysis, hardening). Evidence-backed, proof-first, scope-disciplined.",
+  "author": {
+    "name": "Santosh Patro",
+    "email": "patrosantosh007@gmail.com"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/iamsantosh007/ultron_cyber_security",
+  "repository": "https://github.com/iamsantosh007/ultron_cyber_security",
+  "bugs": "https://github.com/iamsantosh007/ultron_cyber_security/issues",
+  "keywords": [
+    "security",
+    "pentest",
+    "appsec",
+    "owasp",
+    "dfir",
+    "blue-team",
+    "code-audit",
+    "vulnerability",
+    "agentic"
+  ]
+}

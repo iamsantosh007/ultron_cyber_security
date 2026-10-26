@@ -1,0 +1,22 @@
+# Assessment artifacts — NEVER commit evidence, findings, or secrets
+*-FINDINGS.md
+INCIDENT-REPORT.md
+HARDENING-REVIEW.md
+ir-evidence/
+SHA256SUMS
+*.log
+*.pcap
+.env
+.env.*
+!.env.example
+
+# Reference clones studied during development (large, not part of the plugin)
+_refs/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/
