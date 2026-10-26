@@ -8,7 +8,10 @@ table bridges the two so a finding and an intrusion describe the same thing.
 Use the **most specific** mapping the evidence supports; drop a column when it
 does not fit. ATT&CK columns describe how a *weakness is exploited in the wild*,
 not that exploitation occurred — keep the offense/defense distinction explicit.
-Versions: OWASP Top 10:2025, CWE, MITRE ATT&CK v18 (Enterprise).
+Web categories use OWASP Top 10:2025. ATT&CK examples are investigative leads;
+verify the live technique entry and record its edition before attribution. See
+the [source index](sources.md) for authoritative version history. There is no
+one-to-one mapping between an application weakness and an observed intrusion.
 
 ## OWASP:2025 → CWE → ATT&CK
 
@@ -22,19 +25,16 @@ Versions: OWASP Top 10:2025, CWE, MITRE ATT&CK v18 (Enterprise).
 | A06 Insecure Design | 840, 657 | varies — logic abuse; no single technique |
 | A07 Authentication Failures | 287, 347, 384, 613, 798 | Credential Access · brute force (T1110); valid accounts (T1078); T1212 |
 | A08 Software or Data Integrity Failures | 502, 345, 494 | Execution / Persistence · insecure deserialization, unsigned update |
-| A09 Logging & Alerting Failures | 778, 223 | Defense Evasion · impair/indicator removal (T1562, T1070) — enables dwell |
-| A10 Mishandling of Exceptional Conditions | 755, 391, 209 | Discovery · error-message info leak (T1592/T1210 chains); DoS-adjacent |
+| A09 Logging & Alerting Failures | 778, 223 | No technique implied by missing logs; intentional indicator removal may support T1070 |
+| A10 Mishandling of Exceptional Conditions | 755, 391, 209 | No technique implied; establish the fail-open or disclosure effect first |
 
-## ATT&CK tactic order (v18 Enterprise, for timelines)
+## Technique attribution for timelines
 
-Reconnaissance → Resource Development → Initial Access → Execution →
-Persistence → Privilege Escalation → Defense Evasion → Credential Access →
-Discovery → Lateral Movement → Collection → Command and Control →
-Exfiltration → Impact.
-
-Attribute an observed artifact to the **earliest** supported tactic and trace
-forward. A technique label is a hypothesis backed by a specific artifact, never
-a conclusion from one log line.
+Order the actual events by evidence and timestamp; tactics are not a required
+sequence. Name the technique only where observed behavior supports it. An
+unauthenticated route in a code review is not evidence that T1190 occurred.
+Do not attribute a threat actor from a technique match alone. Tactic names change
+between editions, so avoid labeling an old mapping as current.
 
 ## High-signal technique → detection source
 

@@ -1,5 +1,11 @@
 # Evidence and reporting
 
+For repeatable assessments, SARIF export or later retests, use the
+[assessment ledger](../../../docs/assessment-format.md). Keep the prose report's
+verdicts aligned with the validated records. The helper produces the finding and
+coverage report; add engagement-specific prioritization and chain narratives with
+explicit evidence links rather than inventing severity formulas.
+
 Use a private run directory (for example, an OS-created temporary directory) for
 working notes and sanitized evidence. Keep only credential-file references in
 notes; do not copy secrets into prompts or proof files. Do not commit assessment

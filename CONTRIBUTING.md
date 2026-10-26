@@ -1,17 +1,19 @@
 # Contributing to Ultron
 
-Ultron is a Claude Code plugin: a set of security **skills** (Markdown + a
-manifest), not an application. Contributions are welcome — new checks, new skills,
-sharper methodology, corrections. Read this first so a change fits the design.
+Ultron is a Claude Code plugin with focused security skills and a standard-library
+Python helper for assessment artifacts. Contributions are welcome: stronger checks,
+better evidence, useful team workflows and corrections. Read this first so a change
+fits the design.
 
 ## Design principles (do not regress these)
 
 Ultron scores well because it is disciplined. Keep every contribution inside
 these rails:
 
-1. **Proof over alerts.** A scanner hit, a risky code path, or a version match is
-   a *candidate*, never a finding, until the effect is demonstrated and
-   independently reproduced. Methodology text must preserve this distinction.
+1. **Accurate evidence labels.** Runtime exploit confirmation needs a demonstrated
+   effect and independent replay. Static issues remain explicitly static; incident
+   observations need their own artifact evidence. Never relabel a scanner/version
+   match as runtime proof or an absent retest as a fix.
 2. **Scope discipline.** Default to loopback / explicitly-authorized targets.
    Never add a check that scans neighboring services, follows out-of-scope
    redirects, or contacts third parties. Enforce the scope manifest on every
@@ -35,6 +37,11 @@ these rails:
 skills/<name>/SKILL.md                           one skill, with frontmatter (name, description)
 skills/<name>/references/*.md                     the skill's depth
 references/knowledge/*.md                          cross-skill shared packs
+references/team-workflows.md                      assessment and handoff patterns
+scripts/ultron.py                                 artifact helper, no PoC execution
+scripts/validate_plugin.py                        offline package validation
+docs/assessment-format.md                         ledger and CLI contract
+tests/                                           behavioral regression tests
 ```
 
 ## Adding or changing a skill
@@ -60,9 +67,18 @@ references/knowledge/*.md                          cross-skill shared packs
 Verify the plugin still loads locally:
 
 ```sh
-/plugin marketplace add /path/to/this/repo
-/plugin install ultron@ultron
+python3 scripts/validate_plugin.py
+python3 -m unittest discover -s tests -v
+claude plugin validate .claude-plugin/plugin.json --strict
+claude plugin validate .claude-plugin/marketplace.json --strict
+claude --plugin-dir /path/to/this/repo
 ```
+
+Use Python 3.11+; keep runtime dependencies in the standard library. Test meaningful
+invariants when changing the helper: scope containment, evidence integrity, verdict
+requirements, export behavior and comparison semantics. The CI suite does not call
+an LLM or pentest a live service. Do not publish evidence or automatically run scripts
+embedded in a report. Version the manifest and helper together when releasing.
 
 ## License
 

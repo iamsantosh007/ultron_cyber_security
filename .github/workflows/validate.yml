@@ -1,0 +1,27 @@
+name: Validate Ultron
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.14']
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Validate package and references
+        run: python scripts/validate_plugin.py
+      - name: Run behavioral tests
+        run: python -m unittest discover -s tests -v

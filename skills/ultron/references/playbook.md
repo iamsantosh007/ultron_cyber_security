@@ -9,7 +9,7 @@ inert destinations. Nothing here authorizes a target outside the scope manifest.
 Use one run marker per engagement so fresh effects are distinguishable:
 
 ```sh
-MARK="ultron-$(date +%s)-$RANDOM"   # e.g. ultron-1761500000-18423
+MARK="ultron-$(date +%s)-$$"   # e.g. ultron-1761500000-18423
 RUN="$(mktemp -d)"                  # private run directory for notes + evidence
 ```
 
@@ -18,15 +18,16 @@ RUN="$(mktemp -d)"                  # private run directory for notes + evidence
 Baseline first — short timeout, redirects off, note status and shape:
 
 ```sh
-curl -sS -m 5 -D - -o /dev/null --no-keepalive http://localhost:3000/
-curl -sS -m 5 http://localhost:3000/health
+curl --noproxy '*' -sS --connect-timeout 3 -m 5 -D - -o /dev/null --no-keepalive http://localhost:3000/
+curl --noproxy '*' -sS --connect-timeout 3 -m 5 http://localhost:3000/health
 ```
 
-Resolve the exact runtime version from the lockfile, not a manifest range:
+Read resolved dependency versions from an npm v2/v3 lockfile; confirm the running
+build uses that lockfile before calling them runtime versions:
 
 ```sh
-test -f server/package-lock.json && jq '.packages[""].dependencies // {}' server/package-lock.json
-grep -RnoE 'app\.(get|post|put|patch|delete)\(' server/ | head -40   # route inventory from source
+test -f server/package-lock.json && jq '.packages | to_entries[] | select(.key != "" and .value.version != null) | {path: .key, version: .value.version}' server/package-lock.json
+rg -n 'app\.(get|post|put|patch|delete)\(' --glob '!**/node_modules/**' server/   # route inventory from source
 ```
 
 Record each endpoint in the methodology's surface table. Mark every row as
@@ -41,8 +42,8 @@ falsifiable proof condition:
 | slice | endpoints            | class            | accounts | control                | proof condition                         | status  |
 |-------|----------------------|------------------|----------|------------------------|-----------------------------------------|---------|
 | S1    | GET /api/orders/:id  | IDOR / BOLA      | A, B     | A reads A's own order  | A reads B's order marked $MARK          | planned |
-| S2    | POST /api/login      | auth / JWT       | A        | valid token accepted   | alg:none / HS-RS confusion token accepted| planned |
-| S3    | GET /api/search?q=   | SQL injection    | A        | q=1 vs q=1' same rows  | boolean pair changes result set         | planned |
+| S2    | POST /api/login      | auth / JWT       | A        | valid token accepted   | tampered token authorizes a protected action| planned |
+| S3    | GET /api/search?q=   | SQL injection    | A        | valid query returns seeded row  | boolean pair changes result set         | planned |
 ```
 
 Prioritize authorization boundaries and inputs reaching interpreters. Serialize
@@ -55,11 +56,11 @@ disposable orders owned by A and B:
 
 ```sh
 # baseline: B reads B's own order (should succeed)
-curl -sS -m 5 -H "Authorization: Bearer $TOKEN_B" http://localhost:3000/api/orders/$ORDER_B
+curl --noproxy '*' -sS --connect-timeout 3 -m 5 -H "Authorization: Bearer $TOKEN_B" "http://localhost:3000/api/orders/$ORDER_B"
 # probe: A reads B's order (should be denied)
-curl -sS -m 5 -H "Authorization: Bearer $TOKEN_A" http://localhost:3000/api/orders/$ORDER_B
+curl --noproxy '*' -sS --connect-timeout 3 -m 5 -H "Authorization: Bearer $TOKEN_A" "http://localhost:3000/api/orders/$ORDER_B"
 # control: A reads A's own order (should succeed — proves A's token/path work)
-curl -sS -m 5 -H "Authorization: Bearer $TOKEN_A" http://localhost:3000/api/orders/$ORDER_A
+curl --noproxy '*' -sS --connect-timeout 3 -m 5 -H "Authorization: Bearer $TOKEN_A" "http://localhost:3000/api/orders/$ORDER_A"
 ```
 
 Finding only if the probe returns B's marked data while the control behaves
@@ -69,8 +70,8 @@ normally. Inspect the body, not just the status — a `200` can wrap an error an
 Put payloads with shell/SQL syntax in a file, never inline:
 
 ```sh
-printf '{"q":"1\" OR \"1\"=\"1"}' > "$RUN/s3-probe.json"
-curl -sS -m 5 -H 'Content-Type: application/json' --data @"$RUN/s3-probe.json" \
+printf '%s\n' '{"q":"1\" OR \"1\"=\"1"}' > "$RUN/s3-probe.json"
+curl --noproxy '*' -sS --connect-timeout 3 -m 5 -H 'Content-Type: application/json' --data @"$RUN/s3-probe.json" \
   http://localhost:3000/api/search
 ```
 
@@ -91,20 +92,24 @@ session state. Workers never spawn their own agents.
 Re-prove every candidate from a clean slate — fresh fixtures, independent run:
 
 ```sh
-ORDER_B2=$(curl -sS -m 5 -H "Authorization: Bearer $TOKEN_B" \
+curl --noproxy '*' -sS --connect-timeout 3 -m 5 -H "Authorization: Bearer $TOKEN_B" \
   --data "{\"item\":\"$MARK\"}" -H 'Content-Type: application/json' \
-  http://localhost:3000/api/orders | jq -r .id)
-# confirmed only if A again reads the NEW marked order it does not own
-curl -sS -m 5 -H "Authorization: Bearer $TOKEN_A" http://localhost:3000/api/orders/$ORDER_B2 | grep -q "$MARK" \
-  && echo CONFIRMED || echo "not reproduced"
+  http://localhost:3000/api/orders > "$RUN/new-order.json"
+ORDER_B2=$(jq -er '.id | select(type == "string" or type == "number")' "$RUN/new-order.json")
+# Check that the ID is an expected identifier before using it as a URL path segment.
+curl --noproxy '*' -sS --connect-timeout 3 -m 5 -H "Authorization: Bearer $TOKEN_A" \
+  "http://localhost:3000/api/orders/$ORDER_B2" > "$RUN/replay-response.json"
 ```
+
+Inspect the returned private fields and fixture ownership, then repeat the owner
+control. A reflected marker in an error body is not a confirmed disclosure.
 
 Do not repeat an irreversible action to prove reproducibility — keep it a
 candidate and state the exact missing evidence. For a redirect, inspect without
 following:
 
 ```sh
-curl -sS -m 5 -D - -o /dev/null "http://localhost:3000/go?next=https://ultron.invalid/"   # read Location, do not visit
+curl --noproxy '*' -sS --connect-timeout 3 -m 5 -D - -o /dev/null "http://localhost:3000/go?next=https://ultron.invalid/"   # read Location, do not visit
 ```
 
 ## 5. Report and close
@@ -114,9 +119,11 @@ Write `SECURITY-FINDINGS.md` (orchestrator only) using the record in
 state change. Then clean up only what this run created:
 
 ```sh
-curl -sS -m 5 -X DELETE -H "Authorization: Bearer $TOKEN_B" http://localhost:3000/api/orders/$ORDER_B2
+curl --noproxy '*' -sS --connect-timeout 3 -m 5 -X DELETE -H "Authorization: Bearer $TOKEN_B" "http://localhost:3000/api/orders/$ORDER_B2"
 # record anything that could not be removed as a residual change in the report
 ```
 
-Finish with: report path, confirmed counts by severity, highest-priority fixes,
-and material coverage limits.
+For structured output, use the [assessment helper](../../../docs/assessment-format.md)
+to validate evidence and render Markdown/SARIF. The helper never executes these
+example requests. Finish with the report path, confirmed counts, top fixes, and
+coverage limits.

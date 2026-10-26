@@ -3,9 +3,34 @@ name: ultron
 description: Find and reproduce vulnerabilities in a user's locally running web app or API. Use for a localhost pentest, local security assessment, or requests to prove vulnerabilities in a development server, optionally using its source code. Coordinates reconnaissance, focused testing, independent verification, and an evidence-backed report through Claude Code subagents when available. Runs host tools without requiring Docker or a hosted scanner. Supports explicitly identified user-owned private-LAN development targets; excludes public targets and source-only reviews without a running app.
 ---
 
-# Ultron — local application pentest
+# Ultron++ — local application pentest
 
 Turn a local app's attack surface into reproducible findings and specific fixes. Follow **Recon → Plan → Test → Verify → Report**, inspired by PentAGI's orchestration pattern. You coordinate the engagement and own the final verdict; delegate independent work when useful and supported, or run the same workflow sequentially.
+
+Work like an application pentester: identify the assets and trust boundaries,
+form falsifiable attack hypotheses, adapt to observed behavior, and explain the
+business effect of each proven weakness. A long payload list is not coverage.
+For an existing report or patched issue, use [retest](../retest/SKILL.md).
+
+## Developer-team workflows
+
+For broad or repeatable assessments, read [team workflows](../../references/team-workflows.md) for assessment depth,
+authorization matrices, attack-chain reasoning, and handoffs. For repeatable team
+assessments, initialize the bundled [assessment ledger](../../docs/assessment-format.md)
+and update it at phase boundaries. For a small one-off check, a Markdown report
+remains sufficient; do not add ceremony unrelated to the request.
+
+The helper is `${CLAUDE_PLUGIN_ROOT}/scripts/ultron.py` (Python 3.11+). If the host
+does not substitute that path, resolve [../../scripts/ultron.py](../../scripts/ultron.py)
+relative to this skill's installed directory. Do not assume plugin variables are
+exported in Bash, and never write run state into the installed plugin directory.
+The helper validates records and scope preflight; it does not run attacks or
+provide a transport sandbox.
+
+For a short, explicitly bounded check, keep the path compact: record scope and
+budget, establish the normal response, test the highest-risk relevant boundary,
+replay any positive with its control, and report coverage and cleanup. Read only
+the applicable methodology section; the team guide and ledger are optional here.
 
 ## Establish the engagement
 
@@ -14,7 +39,7 @@ Use the user's request and existing project context to identify the target, sour
 Record a short scope manifest before active testing:
 
 - **Targets:** exact HTTP(S) origins (scheme, host, port), allowed base paths, and resolved addresses. Default to the named loopback service (`localhost`, `127.0.0.1`, `[::1]`). Include a private-LAN development service only when the user identifies it as theirs and includes it in the engagement. A different port is a different target.
-- **Access:** test-account aliases and roles, fixture ownership, and local credential-file references. Use two ordinary accounts for cross-user checks when available. Never put raw passwords, tokens, or cookies in the manifest or report.
+- **Access:** test-account aliases and roles, fixture ownership, and local credential-file references. Use two ordinary accounts for cross-user checks when available. Parse and use credentials inside the request process; inspect only alias/role metadata, never print an entire credential file into tool output. Never put raw passwords, tokens, or cookies in the manifest or report.
 - **Constraints:** exclusions, permitted test-data changes, request/time limits, and known external integrations. Derive limits from project guidance; otherwise start conservatively and record the chosen budget.
 - **Artifacts:** project directory, a unique private run directory, and the final report path.
 
@@ -51,6 +76,13 @@ For delegation, use **RECON** in [references/subagent-prompts.md](references/sub
 
 Build a compact matrix of endpoint clusters × relevant vulnerability classes. Prioritize authorization boundaries, authentication, sensitive data flows, and user-controlled inputs that reach interpreters or filesystem/network operations. Load only the applicable methodology sections.
 
+For multi-user or multi-tenant apps, build a principal × action × object-owner
+matrix before probing. Include anonymous, owner, peer, other tenant, and admin
+only where accounts exist. State the expected allow/deny result from product
+rules; unavailable roles are coverage gaps. Investigate plausible attack chains
+only when earlier steps establish the next step's prerequisites. Keep an untested
+link explicitly hypothetical and reuse existing proof instead of escalating damage.
+
 For each slice record its hypothesis, endpoints, account/fixture needs, baseline/control, proof condition, owner, and status. Use `planned`, `running`, `tested`, `inconclusive`, `blocked`, `skipped`, or `not-applicable`; a tested slice may produce zero or more findings.
 
 Partition by class for small surfaces or by endpoint cluster for larger apps. Share read-only recon; give each worker separate evidence files and test fixtures. Serialize tests sharing accounts, records, rate limits, or timing measurements. Fit concurrency to actual agent slots and the app's capacity; start with two independent workers when resources allow. Divide the total request budget across workers.
@@ -80,6 +112,12 @@ Deduplicate by root cause and affected boundary. Keep severity separate from con
 ### 5. Report and close
 
 Follow [references/reporting.md](references/reporting.md). Write `SECURITY-FINDINGS.md` in the project directory, unless the user specifies another path. Preserve an existing report unless this is an explicit update; otherwise use a run-specific filename. Only the orchestrator writes the consolidated report.
+
+When using the ledger, validate hashes before exporting Markdown or SARIF. Give
+each finding a stable root-cause identity, specific fix location, owner suggestion,
+and regression check. SARIF requires real source locations; URL-only findings
+remain in the Markdown report. Prepare issue-ready summaries locally; publishing
+issues or uploading reports requires the user's instruction.
 
 Include confirmed findings ordered by severity, candidates separately, actual coverage and blockers, prioritized remediation, and cleanup status. No findings means “no confirmed vulnerabilities in the tested scope,” not that the app is secure.
 

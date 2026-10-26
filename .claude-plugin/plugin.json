@@ -1,7 +1,7 @@
 {
   "name": "ultron",
-  "version": "0.1.0",
-  "description": "Ultron — one-stop agentic cybersecurity plugin for Claude Code. Penetration testing (pentest) of local web apps and APIs, white-box source code security audit, and blue-team defense (DFIR incident response, log analysis, hardening). Covers OWASP Top 10, MITRE ATT&CK, vulnerability detection, ethical hacking, red team and blue team workflows — evidence-backed, proof-first, scope-disciplined.",
+  "version": "0.2.0",
+  "description": "Ultron++ — local web/API pentesting, source and diff security review, incident response, and evidence-backed remediation retests for developer teams. Includes a private assessment ledger, scope preflight, checksum validation, Markdown/SARIF export, and baseline comparison. Host tools; no hosted scanner required.",
   "author": {
     "name": "Santosh Patro",
     "email": "patrosantosh007@gmail.com"

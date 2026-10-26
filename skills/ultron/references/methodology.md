@@ -121,6 +121,10 @@ Capture request/response evidence and the server/browser state that proves impac
 
 ## Tools and taxonomy
 
+For GraphQL, WebSocket, or AI features discovered in recon, load
+[protocol and agent checks](api-and-agent-tests.md). Do not run those checks merely
+because the framework supports a feature the application does not expose.
+
 Start with available `curl`/HTTP clients, browser automation, source search, and small local scripts. Add a specialized scanner only when it improves a specific slice. Before use, inspect its installed version/help and selected checks for request volume, active side effects, external callbacks, automatic updates, and redirect behavior. Record substitutions; a missing branded tool does not by itself mean the vulnerability class was skipped.
 
 Use vulnerability names throughout. Add CWE or a versioned OWASP category only when the mapping is supported; never mix category numbers from different editions. OWASP Top 10:2025 is the web-app taxonomy reference; the API Security Top 10:2023 is a separate list. This workflow is not an exhaustive compliance assessment of either list.

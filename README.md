@@ -1,110 +1,115 @@
 <p align="center">
-  <img src="assets/ultron-hud.svg" alt="Ultron — one-stop agentic cybersecurity for Claude Code" width="100%">
+  <img src="assets/ultron-hud.svg" alt="Ultron application security for developer teams" width="100%">
 </p>
 
-<h1 align="center">Ultron</h1>
+<h1 align="center">Ultron++</h1>
 
 <p align="center">
-  <b>One-stop agentic cybersecurity plugin for <a href="https://claude.com/claude-code">Claude Code</a>.</b><br>
-  Penetration testing · web &amp; API security · source code audit · OWASP Top 10 · MITRE ATT&amp;CK · DFIR &amp; hardening — red team <b>and</b> blue team, evidence-backed and proof-first.
+  <b>Application security that follows a finding through to a verified fix.</b><br>
+  A Claude Code plugin for local web/API pentesting, source review, defense, and remediation retests.
 </p>
 
 <p align="center">
   <img alt="License" src="https://img.shields.io/badge/license-MIT-ff6a4d">
-  <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-ff8a3d">
-  <img alt="Claude Code" src="https://img.shields.io/badge/Claude%20Code-plugin-5aa0ff">
-  <img alt="Skills" src="https://img.shields.io/badge/skills-3-49d08b">
-  <img alt="OWASP" src="https://img.shields.io/badge/OWASP%20Top%2010-2025-6f42c1">
-  <img alt="MITRE ATT&CK" src="https://img.shields.io/badge/MITRE%20ATT%26CK-v18-e0245e">
-  <img alt="PRs welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen">
+  <img alt="Version" src="https://img.shields.io/badge/version-0.2.0-ff8a3d">
+  <img alt="Skills" src="https://img.shields.io/badge/skills-4-49d08b">
+  <img alt="Python" src="https://img.shields.io/badge/helper-Python_3.11%2B-5aa0ff">
 </p>
 
----
+## What changed in Ultron++
 
-> [!WARNING]
-> **Authorized use only.** Ultron is for systems you own or have explicit written permission to test. It defaults to loopback/private-LAN targets, refuses public third-party targets, and never performs destructive, denial-of-service, or mass-targeting actions. You are responsible for staying within your authorization and local law. See [SECURITY.md](SECURITY.md).
+- **Think in trust boundaries.** Prioritize sensitive assets, build principal/action/owner matrices, and investigate attack chains with explicit evidence for each connecting step.
+- **Keep the proof.** A private assessment ledger records findings, actual coverage, cleanup, and SHA-256 references to sanitized evidence. Confirmed runtime findings need a separate replay artifact and a legitimate control.
+- **Close the loop.** The new retest skill distinguishes resolved, persistent, regressed, unverified, and untested findings. A finding disappearing from a report never means it was fixed.
+- **Fit developer workflows.** Review PR diffs with surrounding guards/callers, produce concrete regression checks, export Markdown and SARIF, and compare runs using identities stable across title or source-line changes.
+- **Represent uncertainty.** Static analysis stays labeled as static. Skipped checks, missing evidence, and unresolved candidates cannot silently become a clean gate result.
+- **Go beyond REST.** Focused methodology covers GraphQL resolver boundaries, WebSocket message authorization, and AI tool/retrieval boundaries using controlled fixtures.
 
-## 🎯 Why Ultron
+Ultron coordinates tools available in Claude Code. Its Python helper manages artifacts and preflight checks; it is not an autonomous scanner executable or a network sandbox. No Docker, hosted scanner, or additional API account is required by the plugin. Available tools and credentials determine assessment coverage.
 
-- **One plugin, the whole security lifecycle** — find it (pentest), read it (code audit), defend it (DFIR + hardening). No juggling separate tools.
-- **Proof, not noise** — every finding is demonstrated and independently reproduced with a working PoC, not a scanner alert you have to chase.
-- **Runs where you work** — host tools against `localhost`, no Docker, no cloud account, no hosted scanner, no API key beyond Claude Code itself.
-- **Maps to what matters** — OWASP Top 10:2025, MITRE ATT&CK v18, CWE, NIST CSF, so findings speak the language your team and auditors already use.
-- **Free & open source (MIT)** — fork it, extend it, ship it.
+## Skills
 
-**Try it once:** install, then type *"pentest my app on `http://localhost:3000`"* — you'll have a reproducible findings report in minutes.
+| Command | Job | Output |
+|---|---|---|
+| `/ultron:ultron` | Test an authorized local web app/API with recon, hypotheses, probes, controls, and independent verification | Runtime findings, evidence and coverage |
+| `/ultron:code-audit` | Trace source or a diff through authentication, authorization and sensitive sinks | Static issues with source chains and specific fixes |
+| `/ultron:retest` | Recheck an earlier finding against a patched local build | Fix/regression verdicts with fresh proof and controls |
+| `/ultron:defend` | Analyze incident artifacts or review hardening against a threat model | Evidence-based incident timeline or prioritized hardening review |
 
-## ✨ What's inside
+Describe the task normally or invoke a command explicitly. Examples:
 
-Installing the plugin gives you several skills. Each triggers on its own description — you don't choose a skill by hand, you just describe the task.
+> Pentest localhost:3000. Two test tenants are available. Focus on order access and exports.
+>
+> Review this branch against main for security regressions; trace changed guards and callers.
+>
+> Retest ULTRON-003 on the patched local build and check sibling routes using the same guard.
+>
+> Analyze these copied access and application logs; distinguish observations from hypotheses.
 
-| Skill | Use it for | Posture |
-|---|---|:---:|
-| **⚔️ ultron** | Localhost / private-LAN web app & API penetration test. Recon → Plan → Test → Verify → Report with independent verification and an evidence-backed report. | 🔴 Offense |
-| **🔎 code-audit** | White-box vulnerability review of source code (no running app required). Data-flow and authorization reasoning, each issue tied to a sink and a fix. | 🔴 Offense |
-| **🛡️ defend** | Blue-team work: incident triage and DFIR, log/artifact analysis, and configuration hardening against a known threat model. | 🟢 Defense |
+## Install or try the checkout
 
-Shared knowledge packs — a **techniques atlas** mapping ~30 security domains (cloud, containers, identity, forensics, threat intel, and more) to the skill that owns each, a MITRE ATT&CK ↔ CWE ↔ OWASP:2025 crosswalk, breach-class patterns, and an authoritative source index — back every skill so findings map to recognized taxonomies. The atlas gives the breadth of a sprawling technique catalog in one orchestrated, proof-first reference instead of hundreds of isolated skills.
+In an interactive Claude Code session, install the published marketplace version:
 
-### 🧬 Reverse engineering
-
-Ultron does **not** bundle a reverse-engineering engine. For binary, firmware, mobile, or managed-code RE, install the official **REA** plugin / `reverse-engineer-anything` skill alongside Ultron. Ultron's skills point you to it when a task needs deep RE.
-
-## 📦 Install
-
-```sh
-# add this repo as a plugin marketplace, then install the plugin
+```text
 /plugin marketplace add iamsantosh007/ultron_cyber_security
 /plugin install ultron@ultron
 ```
 
-Or clone locally and add the path as a marketplace in an interactive Claude Code session.
+To test this checkout immediately, launch from its root:
 
-## 🚀 Usage
-
-Just describe the job — Claude routes to the right skill:
-
-- 💬 *"Pentest my app running on `http://localhost:3000`, source is in `./server`."*
-- 💬 *"Audit this repo for security vulnerabilities."*
-- 💬 *"Something hit our dev box — help me triage these logs and figure out what happened."*
-- 💬 *"Harden this nginx + Postgres setup before we expose it."*
-
-Ultron records a scope manifest, works the methodology, verifies every confirmed finding independently, and writes a `SECURITY-FINDINGS.md` report with reproductions, evidence, severity, and prioritized fixes.
-
-## 🧭 Principles
-
-- **Proof over alerts.** A scanner hit or risky code path is a *candidate*, not a finding, until the effect is demonstrated and independently reproduced.
-- **Least-invasive evidence.** Disposable fixtures, harmless markers, no table dumps, no DoS, no brute force by default.
-- **Scope-disciplined.** Validates resolved addresses, blocks out-of-scope subresources/redirects/callbacks, never scans a neighboring local service just because it's reachable.
-- **Secret hygiene.** No raw credentials, tokens, or cookies in manifests, prompts, or reports.
-- **Knowledge, cited.** Methodology distilled from OWASP (WSTG, Top 10, ASVS, cheat sheets), MITRE ATT&CK & CWE, NIST SP 800-115 / CSF, PTES, and CISA KEV — referenced, not copied.
-
-## 🗂️ Layout
-
-```
-.claude-plugin/        plugin.json · marketplace.json
-skills/
-  ultron/              localhost web/API pentest  (+ references/)
-  code-audit/          white-box source review    (+ references/)
-  defend/              DFIR response & hardening   (+ references/)
-references/knowledge/  techniques-atlas · attack-mapping · incident-patterns · sources
+```sh
+claude --plugin-dir "$(pwd)"
 ```
 
-## 📌 Status
+Local edits do not update the published marketplace or an existing cached installation. Keep the plugin identifier `ultron`; Ultron++ is the name of the 0.2.0 feature release.
 
-`v0.1.0` — all three skills (**ultron**, **code-audit**, **defend**) and the shared knowledge packs are in place. Taxonomies current as of 2026-10-26: **OWASP Top 10:2025**, **MITRE ATT&CK v18**. Expect iteration — file issues for gaps.
+## Assessment artifacts
 
-## 🤝 Contributing & security
+The optional helper needs Python 3.11+ and has no third-party Python dependencies:
 
-- [CONTRIBUTING.md](CONTRIBUTING.md) — design principles (keep them intact), layout, and the PR checklist.
-- [SECURITY.md](SECURITY.md) — how to report a vulnerability in the plugin, and the authorized-use policy.
+```sh
+python3 scripts/ultron.py init /tmp/orders-run --project orders-api --target http://localhost:3000/api
+python3 scripts/ultron.py scope /tmp/orders-run http://localhost:3000/api/orders
+# Perform the assessment and populate the ledger with real evidence.
+python3 scripts/ultron.py validate /tmp/orders-run
+python3 scripts/ultron.py report /tmp/orders-run --output /tmp/orders-report.md
+python3 scripts/ultron.py report /tmp/orders-run --format sarif --output /tmp/orders.sarif
+python3 scripts/ultron.py compare /tmp/orders-run /tmp/orders-retest
+python3 scripts/ultron.py gate /tmp/orders-retest --fail-on high
+```
 
-## 🔖 Topics
+See [assessment format and CLI](docs/assessment-format.md) for evidence records, stable identities, gate exit codes, and SARIF behavior. Reports never overwrite existing files. SARIF exports confirmed findings with real source locations by default; URL-only issues remain in Markdown. Static candidates require an explicit export option and retain their candidate label. The helper never executes reproduction steps or uploads artifacts.
 
-`cybersecurity` · `penetration-testing` · `pentest` · `ethical-hacking` · `bug-bounty` · `red-team` · `blue-team` · `appsec` · `web-security` · `api-security` · `owasp` · `owasp-top-10` · `mitre-attack` · `vulnerability-scanner` · `security-audit` · `code-audit` · `sast` · `dfir` · `incident-response` · `threat-hunting` · `cloud-security` · `claude-code` · `claude-code-plugin` · `ai-security`
+Scope preflight checks exact origins, path boundaries and pinned DNS answers. The actual HTTP/browser/scanner tool must still enforce connection addresses, proxies, redirects and subrequests. Hash validation establishes artifact integrity, not the truth of an agent's claims. Review and redact artifacts before sharing; there is no automatic arbitrary-secret detector.
 
-Ultron is a Claude Code plugin for penetration testing, application security (AppSec), vulnerability detection, source code security review, and blue-team incident response — an open-source, agentic alternative to running separate pentest, SAST, and DFIR tools.
+## Operating boundaries
 
-## 📄 License
+Active pentests target the named loopback service or explicitly included user-owned private-LAN development service. Public targets, unrelated local services, destructive actions, and broad network pivots are outside this workflow. Use disposable accounts/data and local substitutes for consequential integrations. Source review and defensive artifact analysis do not require a running app.
 
-[MIT](LICENSE) © 2026 Santosh Patro
+The [knowledge atlas](references/knowledge/techniques-atlas.md) helps route related work; it is not a claim that every listed domain has a built-in scanner. Map findings to supported CWE/OWASP categories and observed activity to the appropriate ATT&CK edition. Version-sensitive references live in the [source index](references/knowledge/sources.md). Binary/firmware reverse engineering needs separate tooling.
+
+## Validate the plugin
+
+```sh
+python3 scripts/validate_plugin.py
+python3 -m unittest discover -s tests -v
+claude plugin validate .claude-plugin/plugin.json --strict
+claude plugin validate .claude-plugin/marketplace.json --strict
+```
+
+The test suite covers artifact tampering, proof requirements, scope boundaries, report escaping, SARIF filtering, baseline semantics and CLI exit codes. CI runs offline package checks and these behavioral tests on Python 3.11 and 3.14. These checks do not substitute for evaluating an actual agent-led assessment against a controlled application.
+
+## Layout
+
+```text
+.claude-plugin/          Plugin and marketplace manifests
+skills/                 ultron, code-audit, retest, defend
+references/             Team workflows and shared knowledge
+scripts/ultron.py       Local ledger, scope preflight, exports, comparison and gate
+scripts/validate_plugin.py
+                        Offline packaging/reference checks
+docs/                   Assessment data contract and CLI guide
+tests/                  Behavioral regression tests
+```
+
+[Contributing](CONTRIBUTING.md) · [Security policy](SECURITY.md) · [MIT license](LICENSE)

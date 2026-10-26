@@ -137,7 +137,7 @@
     <text x="414" y="344">SCOPE:LOCKED</text>
     <text x="566" y="344" fill="#36e6ff">PROOF&gt;ALERTS</text>
     <text x="736" y="344">OWASP:2025</text>
-    <text x="874" y="344" fill="#ff7a6a">ATT&amp;CK:v18</text>
+    <text x="874" y="344" fill="#ff7a6a">ATT&amp;CK:MAP</text>
     <text x="1000" y="344">MIT</text>
   </g>
 </svg>

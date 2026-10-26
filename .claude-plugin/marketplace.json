@@ -1,5 +1,8 @@
 {
   "name": "ultron",
+  "metadata": {
+    "description": "Ultron++: local application security assessments, source reviews, defensive analysis, and remediation retests."
+  },
   "owner": {
     "name": "Santosh Patro",
     "email": "patrosantosh007@gmail.com"

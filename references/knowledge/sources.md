@@ -23,9 +23,11 @@ time; the notes here are current as of 2026-10-26.
   https://owasp.org/www-project-application-security-verification-standard/
 - **OWASP Cheat Sheet Series** — per-topic prevention guidance.
   https://cheatsheetseries.owasp.org/
-- **MITRE ATT&CK v18** (Oct 2025) — adversary tactics & techniques; Enterprise
-  has 14 tactics. Used for attribution and detection-strategy mapping.
-  https://attack.mitre.org/
+- **MITRE ATT&CK** — adversary tactics and techniques, used for evidence-based
+  attribution and detection mapping. Record the edition used for each assessment;
+  do not assume example IDs or tactic names in this pack are the latest.
+  [Version history](https://attack.mitre.org/resources/versions/) lists v20.0 as
+  current on 2026-10-26. Verify the live entry before a later assessment.
 - **MITRE CWE** — weakness taxonomy for findings. https://cwe.mitre.org/
 - **MITRE CAPEC** — attack patterns. https://capec.mitre.org/
 
@@ -42,7 +44,8 @@ time; the notes here are current as of 2026-10-26.
 - **PTES** — Penetration Testing Execution Standard. http://www.pentest-standard.org/
 - **NIST SP 800-115** — technical security testing guide.
 - **NIST SP 800-61** — computer security incident handling (DFIR).
-- **NIST CSF 2.0** — Identify/Protect/Detect/Respond/Recover functions.
+- **NIST CSF 2.0** — Govern, Identify, Protect, Detect, Respond, Recover.
+  [Official function definitions](https://www.nist.gov/cyberframework/faqs).
 - **CIS Benchmarks** — per-component hardening baselines. https://www.cisecurity.org/cis-benchmarks
 - **SANS Incident Handler's Handbook** — IR process reference.
 
@@ -70,4 +73,3 @@ bring the result back under Ultron's proof and scope discipline. Ultron's
 [techniques-atlas.md](techniques-atlas.md) is an original, distilled map of the
 same problem space — it was *inspired by* the breadth of such catalogs but is not
 copied from them; no text or files are reused, and Ultron remains MIT-licensed.
-

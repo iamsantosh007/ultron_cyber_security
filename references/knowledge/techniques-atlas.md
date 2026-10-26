@@ -17,7 +17,12 @@ own or may test; many are also listed so the defensive side knows what to detect
   `catalog` (deep per-technique drilldown — see the companion catalog in
   [sources.md](sources.md)).
 - Map findings to ATT&CK/CWE/OWASP via [attack-mapping.md](attack-mapping.md);
-  map defensive work to NIST CSF functions (Identify/Protect/Detect/Respond/Recover).
+  map defensive work to NIST CSF 2.0 functions (Govern/Identify/Protect/Detect/Respond/Recover).
+
+This is a routing/reference map, not a claim of implemented scanners for every
+listed platform. Ultron's active testing remains local HTTP(S) application work.
+Network pivots, host exploitation, and broad infrastructure pentests require a
+different explicitly scoped workflow. Verify current IDs before applying a label.
 
 ## Offense — application & network
 
@@ -25,7 +30,7 @@ own or may test; many are also listed so the defensive side knows what to detect
 |---|---|---|---|
 | Web application security | injection, XSS, SSRF, access control (T1190, T1059) | curl, browser automation, Burp-class proxy | ultron / code-audit |
 | API security (REST/GraphQL/gRPC) | BOLA/BFLA, mass assignment, auth flaws (T1190) | schema tooling, HTTP clients | ultron / code-audit |
-| Penetration testing (network) | service enum, exploitation, pivot (T1046, T1210) | nmap, netcat, service clients | ultron (in-scope hosts only) |
+| Penetration testing (network) | service enum, exploitation, pivot (T1046, T1210) | dedicated network assessment tooling | separate workflow; outside Ultron's web/API scope |
 | Red teaming / lateral movement | valid accounts, remote services, pass-the-* (T1078, T1021) | auth tooling | catalog (authorized engagements) |
 | Vulnerability management | reachability-confirmed advisory matching (T1190 precursors) | OSV, CISA KEV, SCA | code-audit / defend |
 
@@ -36,7 +41,7 @@ own or may test; many are also listed so the defensive side knows what to detect
 | Incident response | triage, timeline, containment (RS.*; T1070 evasion detection) | logs, grep/awk, timeline tooling | defend |
 | Digital forensics | disk/memory acquisition, artifact analysis (DE.AE; T1005) | dd/dcfldd, Autopsy, Volatility, plaso | defend / REA |
 | Threat hunting | hypothesis-driven detection, IOC sweep (DE.CM) | SIEM queries, Sigma, YARA | defend |
-| SOC operations / detection engineering | alert triage, detection rules (DE.AE, PR.PT) | Sigma, Suricata, log pipelines | defend |
+| SOC operations / detection engineering | alert triage, detection rules (Detect/Protect) | Sigma, Suricata, log pipelines | defend |
 | Threat intelligence | IOC/TTP enrichment, attribution (TA0043/TA0042) | MISP, ATT&CK Navigator, OSINT | defend (data in, no active recon on third parties) |
 
 ## Cloud & container
@@ -56,7 +61,7 @@ own or may test; many are also listed so the defensive side knows what to detect
 | Identity & access management | token/session flaws, privilege boundaries (CWE-287/347; T1078) | auth tooling, JWT inspection | ultron / code-audit |
 | Active Directory security | ACL abuse, Kerberos, DPAPI, shadow creds (T1558, T1555) | AD query tooling | catalog (authorized AD engagements) / defend (detect) |
 | Cryptography review | weak algorithms, key handling, TLS config (CWE-327/311) | config inspection, tls dump | code-audit / defend |
-| Zero-trust architecture | segmentation, least privilege, policy design (PR.AC) | architecture review | defend (harden) |
+| Zero-trust architecture | segmentation, least privilege, policy design (Protect) | architecture review | defend (harden) |
 
 ## Specialized
 

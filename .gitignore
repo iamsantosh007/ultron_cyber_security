@@ -1,5 +1,13 @@
 # Assessment artifacts — NEVER commit evidence, findings, or secrets
 *-FINDINGS.md
+*-FINDINGS-*.md
+CODE-AUDIT-*.md
+RETEST-*.md
+*.sarif
+.ultron/
+assessment.json
+__pycache__/
+*.pyc
 INCIDENT-REPORT.md
 HARDENING-REVIEW.md
 ir-evidence/
@@ -23,3 +31,21 @@ Thumbs.db
 
 # Local agent context — inspiration/prior-art note, not published
 INSPIRATION.md
+
+# Local dev cruft — not part of the plugin
+.venv/
+venv/
+node_modules/
+dist/
+build/
+.coverage
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.bak
+*.tmp
+*.orig
+*.rej
+scratch/
+NOTES.md

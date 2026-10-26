@@ -31,8 +31,9 @@ cat ir-evidence/crontab.txt; grep -R . ir-evidence/systemd-units/ 2>/dev/null; c
 ```
 
 Adjust field positions to the actual log format — confirm the format before
-trusting an `awk` column. A `200` to an attacker path means the request
-succeeded; read the response size and the following requests to judge impact.
+trusting an `awk` column. A `200` means the server reported HTTP success, not
+that an exploit succeeded. Correlate application state, response content if
+available, and independent artifacts before claiming impact.
 
 ## Host artifact locations
 
@@ -84,9 +85,8 @@ Ultron skill owns each platform.
 
 ## Attribution
 
-Label activity with MITRE ATT&CK tactics in order — Initial Access, Execution,
-Persistence, Privilege Escalation, Defense Evasion, Credential Access,
-Discovery, Lateral Movement, Collection, Command and Control, Exfiltration,
-Impact — and name the specific technique only when an artifact supports it. Use
-the shared crosswalk at `../../../references/knowledge/attack-mapping.md`.
+Label activity with supported MITRE ATT&CK techniques using the edition recorded
+for the incident. Tactics are not a required chronological sequence; build the
+timeline from observed events. Resolve current technique names and deprecations
+before reporting. Use the shared [crosswalk](../../../references/knowledge/attack-mapping.md).
 State the confidence and what evidence would raise it.

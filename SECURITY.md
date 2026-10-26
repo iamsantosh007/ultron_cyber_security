@@ -2,8 +2,8 @@
 
 ## Scope of this policy
 
-This policy covers the **Ultron plugin itself** — the skills, references, and
-manifests in this repository. It does **not** cover the systems you test with
+This policy covers the **Ultron plugin itself** — its helper code, skills,
+references, and manifests. It does **not** cover the systems you test with
 Ultron; those are your responsibility (see [Authorized use](#authorized-use)).
 
 ## Reporting a vulnerability
@@ -41,3 +41,17 @@ your authorization and applicable law. Misuse is on the operator, not the tool.
 Ultron never commits findings or evidence (see [.gitignore](.gitignore)). Reports
 redact credentials and reference them by location. If you extend Ultron, preserve
 this: no raw secrets in prompts, logs, reference files, or committed artifacts.
+
+## Helper trust boundary
+
+The Python helper reads operator-maintained records and sanitized evidence in a
+private run directory. It does not execute proof commands or perform HTTP tests.
+Scope preflight is a validation aid, not an egress firewall or a guarantee about
+another tool's redirects, DNS resolution, proxies, or application-triggered traffic.
+
+SHA-256 checks detect evidence changes relative to the ledger; they do not prove
+authorship or prevent a party with write access from replacing both. Protect run
+directories and review evidence before sharing. The helper does not discover or
+redact arbitrary secrets. It refuses evidence symlinks/traversal and refuses to
+overwrite report files. Markdown output escapes active content from record values;
+raw evidence must still be treated as untrusted data.
