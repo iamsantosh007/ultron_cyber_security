@@ -12,6 +12,8 @@ Two jobs, picked from the request:
 
 State which mode you are in. A response often ends in hardening recommendations; keep the two phases distinct in the report.
 
+For the range of platforms this covers — cloud control planes, Kubernetes, containers, Active Directory, host and memory forensics — and the artifact sources for each, see [references/ir-playbook.md](references/ir-playbook.md) and the [techniques atlas](../../references/knowledge/techniques-atlas.md).
+
 ## Evidence and authorization (both modes)
 
 - **Evidence is read-only.** Work on copies. Never edit logs, touch timestamps, or run tools that write to the subject system's evidence. Hash each artifact you rely on and record the hash, source path, and collection time so the chain of custody holds.

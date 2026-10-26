@@ -9,6 +9,8 @@ Find security defects by reading source: trace untrusted input to a dangerous si
 
 A static finding is a **well-reasoned candidate**, not a demonstrated exploit. Say so. Severity reflects reachability and the authorization context around the sink, never the mere presence of a scary function.
 
+For the domain breadth this review may touch — cloud/IaC config, containers, CI/CD, supply chain, smart contracts — and which skill owns each, see the [techniques atlas](../../references/knowledge/techniques-atlas.md).
+
 ## Scope and setup
 
 Identify the repository root, the languages/frameworks in use, the trust boundary (what input is attacker-controlled: HTTP params, headers, uploaded files, message queues, CLI args, deserialized blobs), and any diff/PR range if the review is scoped to a change. Record: repo path, commit/branch, review scope (whole tree or diff), and the authoritative source of versions (lockfile).

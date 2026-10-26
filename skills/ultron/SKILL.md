@@ -35,6 +35,10 @@ phase below, see [references/playbook.md](references/playbook.md). Treat it as a
 pattern, not a script: adapt hosts, ports, tools, and payloads to the engagement
 and the scope manifest.
 
+For the wider set of security domains Ultron spans — cloud, containers, identity,
+forensics, threat intelligence, and more — and which skill owns each, see the
+[techniques atlas](../../references/knowledge/techniques-atlas.md).
+
 ### 1. Recon
 
 Read the reconnaissance section of [references/methodology.md](references/methodology.md). Establish reachability and normal responses before probing. Prefer routes, schemas, tests, and dependency lockfiles from the supplied project, then verify the reachable surface. Track observed endpoints separately from routes inferred from source.

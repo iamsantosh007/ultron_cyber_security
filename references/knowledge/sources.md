@@ -55,3 +55,19 @@ time; the notes here are current as of 2026-10-26.
 These inform *patterns*, not an enumeration of every incident. Ultron distills
 recurring attack shapes and their detections/preventions; it does not claim a
 complete incident history.
+
+## Companion catalog (external, optional)
+
+For a deep, tool-specific walkthrough of a single technique beyond Ultron's
+orchestrated skills, an external catalog of per-technique skills exists:
+
+- **Anthropic-Cybersecurity-Skills** (mukul975), Apache-2.0 — 800+ narrow
+  per-technique skills across ~30 subdomains, each ATT&CK/NIST-tagged.
+  https://github.com/mukul975/Anthropic-Cybersecurity-Skills
+
+Install it alongside Ultron when you want catalog-depth on one technique, then
+bring the result back under Ultron's proof and scope discipline. Ultron's
+[techniques-atlas.md](techniques-atlas.md) is an original, distilled map of the
+same problem space — it was *inspired by* the breadth of such catalogs but is not
+copied from them; no text or files are reused, and Ultron remains MIT-licensed.
+

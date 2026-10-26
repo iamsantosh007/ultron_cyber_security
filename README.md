@@ -34,7 +34,7 @@ Installing the plugin gives you several skills. Each triggers on its own descrip
 | **🔎 code-audit** | White-box vulnerability review of source code (no running app required). Data-flow and authorization reasoning, each issue tied to a sink and a fix. | 🔴 Offense |
 | **🛡️ defend** | Blue-team work: incident triage and DFIR, log/artifact analysis, and configuration hardening against a known threat model. | 🟢 Defense |
 
-Shared knowledge packs — a MITRE ATT&CK ↔ CWE ↔ OWASP:2025 crosswalk, breach-class patterns, and an authoritative source index — back every skill so findings map to recognized taxonomies.
+Shared knowledge packs — a **techniques atlas** mapping ~30 security domains (cloud, containers, identity, forensics, threat intel, and more) to the skill that owns each, a MITRE ATT&CK ↔ CWE ↔ OWASP:2025 crosswalk, breach-class patterns, and an authoritative source index — back every skill so findings map to recognized taxonomies. The atlas gives the breadth of a sprawling technique catalog in one orchestrated, proof-first reference instead of hundreds of isolated skills.
 
 ### 🧬 Reverse engineering
 
@@ -77,7 +77,7 @@ skills/
   ultron/              localhost web/API pentest  (+ references/)
   code-audit/          white-box source review    (+ references/)
   defend/              DFIR response & hardening   (+ references/)
-references/knowledge/  attack-mapping · incident-patterns · sources
+references/knowledge/  techniques-atlas · attack-mapping · incident-patterns · sources
 ```
 
 ## 📌 Status

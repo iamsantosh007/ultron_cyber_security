@@ -46,6 +46,32 @@ succeeded; read the response size and the following requests to judge impact.
 - **Containers:** image history, mounted secrets, `docker diff <id>` for
   filesystem changes vs the image, orchestrator audit log.
 
+## Artifact sources by platform
+
+Extend the triage beyond a single host when the environment demands it. All
+read-only; collect to `./ir-evidence` and hash. See the
+[techniques atlas](../../../references/knowledge/techniques-atlas.md) for which
+Ultron skill owns each platform.
+
+- **Cloud control plane:** AWS **CloudTrail** (management + data events), Azure
+  **Activity Log** / Entra ID sign-in & audit logs, GCP **Cloud Audit Logs**.
+  Look for new IAM principals/keys, policy changes, `AssumeRole`/token use from
+  new sources, and metadata-service abuse (SSRF → `169.254.169.254`, T1552.005).
+- **Kubernetes:** API-server **audit log** (verb/user/resource), unexpected
+  `exec`/`attach` into pods, privileged or `hostPath` pods, serviceaccount-token
+  use, RBAC bindings added (T1609/T1078).
+- **Containers:** image history and layers for baked-in secrets, `docker diff`
+  for filesystem drift vs the image, orchestrator events, mounted secrets.
+- **Windows / Active Directory:** Security log (4624/4625 logon, 4672 priv,
+  4720 new account, 4768/4769 Kerberos), Sysmon (1 process, 3 network, 11 file),
+  DPAPI master-key access, `authorized`-equivalent changes, suspicious ACL/DACL
+  edits and shadow-credential (`msDS-KeyCredentialLink`) additions (T1558/T1555).
+- **Evidence acquisition when a host must be imaged:** capture volatile state
+  first (process list, network connections, logged-on users, memory) before
+  disk; image with `dd`/`dcfldd` to a hashed file; analyze the **copy**, never
+  the original. For memory, use the platform's accepted capture tool and analyze
+  offline. Preserve the chain of custody (source, time, hash, handler).
+
 ## Timeline discipline
 
 - Normalize all timestamps to one timezone (UTC) before correlating; note each
